@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Blur</title>
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script src="~/Scripts/jquery.Jcrop.min.js"></script>
+</head>
+<body onload="init()">
+    <script>
+        var currentFileName = null;
+        var jcrop = null;
+
+        function init() {
+            console.log("Init()");
+            $('#dropspot').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
+            var dropArea = document.getElementById("dropspot");
+            dropArea.addEventListener("drop", acceptImage, false);
+            dropArea.addEventListener("dragover", doNothing, false);
+        }
+
+        function dragEnter(event) {
+            console.log("dragEnter event fired!");
+        }
+
+        function acceptImage(event) {
+
+            doNothing(event);
+
+            console.log("ondrog event fired!");
+
+            var filelist = event.dataTransfer.files;
+            var file = filelist[0];
+
+            console.log(filelist.length + " file(s)");
+
+            var reader = new FileReader();
+
+            // init the reader event handlers
+            reader.onload = handleReaderLoad;
+
+            // begin the read operation
+            reader.readAsDataURL(file);
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            // now post a new XHR request
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Home/UploadImage');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Image successfully uploaded with the name: ' + xhr.responseText);
+                    currentFileName = xhr.responseText.substring(1, xhr.responseText.length - 1)
+                } else {
+                    console.log('Something went terribly wrong...' + +xhr.status);
+                }
+            };
+
+            xhr.send(formData);
+        }
+
+        function handleReaderLoad(evt) {
+            console.log("Image read from disk");
+            var img = document.getElementById("dropspot");
+            img.src = evt.target.result;
+        }
+
+        function blurImage(c) {
+
+            console.log("Request section of image " + currentFileName + " to be blurred");
+
+            jcrop.release();
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/Home/BlurSection?fileName=' + currentFileName + '&x=' + Math.round(c.x) + '&y=' + Math.round(c.y) + '&x2=' + Math.round(c.x2) + '&y2=' + Math.round(c.y2));
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log("BlueSection Complete: " + xhr.status + ". Name for image: " + xhr.responseText);
+                    console.log("Updating Onscreen Image...");
+
+                    jcrop.destroy();
+
+                    var img = document.getElementById("dropspot");
+                    img.src = "/Home/Image?name=" + xhr.responseText.substring(1, xhr.responseText.length - 1);
+
+                    $('#dropspot').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
+
+                    currentFileName = xhr.responseText.substring(1, xhr.responseText.length - 1)
+
+                } else {
+                    console.log('Something went terribly wrong...' + xhr.responseText);
+                }
+            };
+
+            xhr.send();
+        }
+
+        function handleReaderLoad(evt) {
+            console.log("Image read from disk");
+            var img = document.getElementById("dropspot");
+            img.src = evt.target.result;
+        }
+
+        // Prevents the event from continuing so our handlers can process the event.
+        function doNothing(event) {
+            //console.log("doNothing()");
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+        function uploadFile() {
+            var xhr = new XMLHttpRequest();
+            var fd = document.getElementById('form1').getFormData();
+
+            /* event listners */
+            xhr.upload.addEventListener("progress", uploadProgress, false);
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+            /* Be sure to change the url below to the url of your upload server side script */
+            xhr.open("POST", "UploadMinimal.aspx");
+            xhr.send(fd);
+        }
+
+    </script>
+    <h2>Image Blur</h2>
+    <p>
+        Image Blur is a simple service that will apply a Gaussian blur to any part of an image, allowing you to mask information or details before uploading the image to your blog etc.
+    </p>
+    <p>
+        To get started, just drag an image from your computer into the box below. Once the image is visible, you can select regions of the image. Each time you select a region, a blur will be applied. This can take a 
+        few seconds, so please be patient. Once you're done, just right click and download the image.
+    </p>
+    <img id="dropspot" style="min-width: 500px; min-height: 500px; margin-left: auto; margin-right: auto;" draggable="false" />
+    <p>
+        <button onclick=""
+    </p>
+</body>
+</html>
