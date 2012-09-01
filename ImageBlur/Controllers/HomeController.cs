@@ -41,7 +41,7 @@ namespace ImageBlur.Controllers
             Debug.WriteLine("fileName: " + fileName + ", X: " + x + ", Y: " + y + ", X2: " + x2 + ", Y2: ", y2);
 
             Gaussian g = new Gaussian();
-            Bitmap processedImage = g.FilterProcessImage(6, new System.Drawing.Bitmap(Path.Combine(Path.GetTempPath(), fileName)), x - 5, x2 - 18, y - 10, y2 - 10);
+            Bitmap processedImage = g.FilterProcessImage(3, new System.Drawing.Bitmap(Path.Combine(Path.GetTempPath(), fileName)), x, x2, y, y2);
 
             ImageConverter converter = new ImageConverter();
             byte[] fileBytes = (byte[])converter.ConvertTo(processedImage, typeof(byte[]));

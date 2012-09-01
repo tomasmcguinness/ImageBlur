@@ -15,7 +15,7 @@
 
         function init() {
             console.log("Init()");
-            $('#dropspot').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
+            $('#imageToBlur').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
             var dropArea = document.getElementById("dropspot");
             dropArea.addEventListener("drop", acceptImage, false);
             dropArea.addEventListener("dragover", doNothing, false);
@@ -29,7 +29,9 @@
 
             doNothing(event);
 
-            console.log("ondrog event fired!");
+            $("#dropspot").hide();
+
+            console.log("ondrop event fired!");
 
             var filelist = event.dataTransfer.files;
             var file = filelist[0];
@@ -50,6 +52,7 @@
             // now post a new XHR request
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/Home/UploadImage');
+
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log('Image successfully uploaded with the name: ' + xhr.responseText);
@@ -63,14 +66,20 @@
         }
 
         function handleReaderLoad(evt) {
-            console.log("Image read from disk");
-            var img = document.getElementById("dropspot");
+            console.log("Image successfully read from disk");
+
+            $("#imageToBlur").show();
+
+            var img = document.getElementById("imageToBlur");
             img.src = evt.target.result;
         }
 
         function blurImage(c) {
 
+            $("#processingDiv").show();
+
             console.log("Request section of image " + currentFileName + " to be blurred");
+            console.log('Bounds: x=' + Math.round(c.x) + '&y=' + Math.round(c.y) + '&x2=' + Math.round(c.x2) + '&y2=' + Math.round(c.y2));
 
             jcrop.release();
 
@@ -85,12 +94,14 @@
 
                     jcrop.destroy();
 
-                    var img = document.getElementById("dropspot");
+                    var img = document.getElementById("imageToBlur");
                     img.src = "/Home/Image?name=" + xhr.responseText.substring(1, xhr.responseText.length - 1);
 
-                    $('#dropspot').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
+                    $('#imageToBlur').Jcrop({ onSelect: blurImage }, function () { jcrop = this; });
 
                     currentFileName = xhr.responseText.substring(1, xhr.responseText.length - 1)
+
+                    $("#processingDiv").hide();
 
                 } else {
                     console.log('Something went terribly wrong...' + xhr.responseText);
@@ -100,15 +111,8 @@
             xhr.send();
         }
 
-        function handleReaderLoad(evt) {
-            console.log("Image read from disk");
-            var img = document.getElementById("dropspot");
-            img.src = evt.target.result;
-        }
-
         // Prevents the event from continuing so our handlers can process the event.
         function doNothing(event) {
-            //console.log("doNothing()");
             event.stopPropagation();
             event.preventDefault();
         }
@@ -136,9 +140,19 @@
         To get started, just drag an image from your computer into the box below. Once the image is visible, you can select regions of the image. Each time you select a region, a blur will be applied. This can take a 
         few seconds, so please be patient. Once you're done, just right click and download the image.
     </p>
-    <img id="dropspot" style="min-width: 500px; min-height: 500px; margin-left: auto; margin-right: auto;" draggable="false" />
+
+    <div id="dropspot" style="position: relative; min-width: 500px; height: 100px; margin-left: auto; margin-right: auto; background-color: lightgray;text-align: center;">
+        <div>Drop an image here to get started</div>
+    </div>
+    <img id="imageToBlur" style="display: none; min-width: 50px; min-height: 50px;" />
+    <div id="processingDiv" style="display: none;">
+        PROCESSING:
+            <img src="/Content/ajax-loader.gif" /><br />
+    </div>
+
     <p>
-        <button onclick=""
+        <button>Start Over</button>
+        <button>Download the image</button>
     </p>
 </body>
 </html>
