@@ -30,6 +30,7 @@
             doNothing(event);
 
             $("#dropspot").hide();
+            $("#btnDownload").show();
 
             console.log("ondrop event fired!");
 
@@ -142,11 +143,6 @@
     <p>
         Image Blur is a simple service that will apply a Gaussian blur to any part of an image, allowing you to mask information or details before uploading the image to your blog etc.
     </p>
-    <p>
-        To get started, just drag an image from your computer into the box below. Once the image is visible, you can select regions of the image. Each time you select a region, a blur will be applied. This can take a 
-        few seconds, so please be patient. Once you're done, just right click and download the image.
-    </p>
-
     <div id="dropspot" style="position: relative; min-width: 500px; height: 100px; margin-left: auto; margin-right: auto; background-color: lightgray; text-align: center;">
         <div>Drop an image here to get started</div>
     </div>
@@ -157,9 +153,16 @@
     </div>
 
     <p>
-        <button onclick="downloadImage()">Download the image</button>
+        <button id="btnDownload" onclick="downloadImage()" style="display: none;">Download the image</button>
     </p>
 
-    <a id="simpleLink" href="#" target="_blank" />
+    <a id="simpleLink" href="#" target="_blank"></a>
+    <p>
+        You can select regions of the image. Each time you select a region, a blur will be applied. This can take a 
+        few seconds, so please be patient. Your images will remain on the server at present, so don't blur anything too sensitive if you're not comfortable having it online. I'm working to add a feature where your files are purged once your session is done.
+    </p>
+    <p>
+        At present, this application only works in IE 10, which is available on Windows 8. If you have any questions or suggestions, email me at <a href="mailto:tomas@tomasmcguinness.com">tomas@tomasmcguinness.com</a>
+    </p>
 </body>
 </html>
