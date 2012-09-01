@@ -131,6 +131,12 @@
             xhr.send(fd);
         }
 
+        function downloadImage() {
+            var link = document.getElementById("simpleLink");
+            link.href = link.href = "/Home/Image?name=" + currentFileName;
+            link.click();
+        }
+
     </script>
     <h2>Image Blur</h2>
     <p>
@@ -141,7 +147,7 @@
         few seconds, so please be patient. Once you're done, just right click and download the image.
     </p>
 
-    <div id="dropspot" style="position: relative; min-width: 500px; height: 100px; margin-left: auto; margin-right: auto; background-color: lightgray;text-align: center;">
+    <div id="dropspot" style="position: relative; min-width: 500px; height: 100px; margin-left: auto; margin-right: auto; background-color: lightgray; text-align: center;">
         <div>Drop an image here to get started</div>
     </div>
     <img id="imageToBlur" style="display: none; min-width: 50px; min-height: 50px;" />
@@ -151,8 +157,9 @@
     </div>
 
     <p>
-        <button>Start Over</button>
-        <button>Download the image</button>
+        <button onclick="downloadImage()">Download the image</button>
     </p>
+
+    <a id="simpleLink" href="#" target="_blank" />
 </body>
 </html>
