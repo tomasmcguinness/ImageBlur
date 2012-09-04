@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
 This file is used by the publish/package process of your Web project. You can customize the behavior of this process
@@ -10,4 +11,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAvMHa+2I5pEmSHOp0bpNMyQAAAAACAAAAAAADZgAAwAAAABAAAAAduFHAwuiHcxcC6fOh5223AAAAAASAAACgAAAAEAAAAEvKlmGVzCXuKHvymyz9ZO+AAAAA/UL9i1e8bJuZYrCdzoYZ1bx2XeC8WKlTmKd2/ytdx7flrxL6DTSLucfoFba5ReIt5QOASx4XrDfbOlfTXL7oUIbIv6rgMRnJOApCR/tqBZiReQuRPXUGQKzunuUkpnhLIHPNocCKmH3NeXV6gEN/PIi3lyRxFuuFva+hV1X2p5IUAAAA5qQFUqZ/okJnReRgPxEyCjJKDuU=</EncryptedPassword>
   </PropertyGroup>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LastUsedBuildConfiguration>Release</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAgitp5KH0KU2skwqytsWYDQAAAAACAAAAAAAQZgAAAAEAACAAAADzOYjCFb6Mh0vhE7Q22CD3Fj8rcVU8U+6gxRelwRdWJwAAAAAOgAAAAAIAACAAAABm/Tt/jq1VTn4txtV6Bo3P5zGddcnuW+XVXKhi97w3kIAAAABdFU5f0FB+yfUd8mXlmAiG8z9BN7MGFwWrJNNSjq4E9FqD4yTa4mxqtYQgxRJIqzhSX+k4bEY8isPO49J44pXHD94B1oPATkySp/K/5mGxBD8Y9BP1a5vZnu+P6YH4K9P54TVsbFNT3BtiY0jQX7S96vaadI5c6GJ/U9PirGk++EAAAACidp/1pSO/0rDRrjXvA4l7/ljRHYMPWxwUdH71lgT6sCbU6wHiKoq67re5SGWafVxrGnAuJri8OlbaCPtLPnhE</EncryptedPassword>
+  </PropertyGroup>
+>>>>>>> 2de2dd5
 </Project>

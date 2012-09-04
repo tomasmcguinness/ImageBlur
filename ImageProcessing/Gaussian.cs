@@ -127,8 +127,6 @@ namespace ImageProcessing
                         int greenVal = (int)Math.Min(255, greenMatrix[i, j]);
                         int blueVal = (int)Math.Min(255, blueMatrix[i, j]);
                         ret.SetPixel(i, j, Color.FromArgb(255, redVal, greenVal, blueVal));
-
-                        //ret.SetPixel(i, j, Color.FromArgb((int)redMatrix[i, j]));
                     }
                     else
                     {
